@@ -59,7 +59,7 @@ def main(options):
             'parking': {'fc': background_c, 'ec': '#2F3737', 'lw': 1, 'zorder': 3},
             'streets': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 4},
             'railway': {'fc': '#DA3F0A', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 5},
-            'building': {'fc': background_c, 'ec': '#2F3737', 'lw': .5, 'zorder': 3},
+            'building': {'palette': ['#FFC857', '#E9724C', '#C5283D'], 'ec': '#2F3737', 'lw': .5, 'zorder': 3},
             'public_transport': {'fc': '#2B90E6', 'ec': '#2b90e6', 'lw': .5, 'zorder': 5},
             'agriculture' : {'palette': ['#64B96A', '#DACC0A', '#6ADA0A'], 'lw': .5,  'zorder': 3}
         },
@@ -76,11 +76,12 @@ def main(options):
     exts = [ot.split('.')[-1] for ot in options.out]
     if 'all' in exts:
         oA = out[exts.index('all')]
-        out.delete(oA)
-        exts.delete('all')
+        out.remove(oA)
+        exts.remove('all')
         exts += ['png', 'pdf']
         out += [oA, oA]
 
+    print(out, exts)
     for i, ext in enumerate(exts):
         fig.savefig(out[i]+'.'+ext)
 
