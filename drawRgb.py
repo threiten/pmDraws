@@ -41,7 +41,7 @@ def main(options):
                 },
                 'circle': False, 'dilate': dilate
             },
-            'argiculture': {'tags': {'landuse': 'farmland'}, 'circle': False, 'dilate': dilate},
+            'argiculture': {'tags': {'landuse': 'farmland'}, 'circle': False, 'union': True, 'dilate': dilate},
             'building': {'tags': {'building': True, 'landuse': 'construction'}, 'union': True, 'circle': False, 'dilate': dilate},
             'water': {'tags': {'natural': ['water', 'bay']}, 'circle': False, 'dilate': dilate},
             'forest': {'tags': {'landuse': 'forest'}, 'circle': False, 'dilate': dilate},
@@ -58,10 +58,10 @@ def main(options):
             'beach': {'fc': '#FCE19C', 'ec': '#2F3737', 'hatch_c': '#d4d196', 'hatch': 'ooo...', 'lw': 1, 'zorder': 3},
             'parking': {'fc': background_c, 'ec': '#2F3737', 'lw': 1, 'zorder': 3},
             'streets': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 4},
-            'railway': {'fc': '#DA3F0A', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 5},
+            'railway': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 5},
             'building': {'palette': ['#FFC857', '#E9724C', '#C5283D'], 'ec': '#2F3737', 'lw': .5, 'zorder': 3},
             'public_transport': {'fc': '#2B90E6', 'ec': '#2b90e6', 'lw': .5, 'zorder': 5},
-            'agriculture' : {'palette': ['#64B96A', '#DACC0A', '#6ADA0A'], 'lw': .5,  'zorder': 3}
+            'argiculture' : {'palette': ['#15B01A', '#BBF90F', '#FAC205'], 'ec': '#2F3737', 'lw': .5,  'zorder': 3}
         },
         osm_credit = {'x': .405, 'y': .68, 'color': '#2F3737'}
     )
@@ -71,6 +71,14 @@ def main(options):
     a = .2
     ax.set_xlim(xmin+a*dx, xmax-a*dx)
     ax.set_ylim(ymin+a*dy, ymax-a*dy)
+
+    ax.text(
+        0.03, 0.9,
+        'Regensburg',
+        color='#2F3737',
+        fontproperties=fm.FontProperties(fname='/home/thomas/Documents/Privat/prettymaps/prettymaps/assets/Permanent_Marker/PermanentMarker-Regular.ttf', size=35),
+        transform=ax.transAxes
+    )
 
     out = [ot.split('.')[0] for ot in options.out]
     exts = [ot.split('.')[-1] for ot in options.out]
