@@ -1,0 +1,20 @@
+import matplotlib.font_manager as fm
+import matplotlib.pyplot as plt
+import osmnx as ox
+import prettymaps as pm
+
+
+def main():
+
+    palette = ['#433633', '#FF5E5B']
+    background_c = '#F2F4CB'
+    dilate = 100
+
+    fig, ax = plt.subplots(figsize = (13, 9), constrained_layout = True)
+
+    ox.config(use_cache=False,
+          log_console=True,
+          useful_tags_way=ox.settings.useful_tags_way + ['railway']
+         )
+
+    

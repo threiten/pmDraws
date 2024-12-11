@@ -11,7 +11,8 @@ def main(options):
     background_c = '#F2F4CB'
     dilate = 100
 
-    fig, ax = plt.subplots(figsize = (13, 9), constrained_layout = True)
+    cm = 1./2.54
+    fig, ax = plt.subplots(figsize = (74*cm, 55*cm), constrained_layout = True)
 
     ox.config(use_cache=False,
           log_console=True,
@@ -19,12 +20,12 @@ def main(options):
          )
 
     layers = pm.plot(
-        '49.01953, 12.09749', radius = 7000,
+        '46.4464, 6.5314', radius = 100000,
         ax = ax,
         
         layers = {
-            'perimeter': {},
-            'railway': {'width': {'rail': 5}, 'custom_filter': '["railway"~"subway|rail"]', 'circle': False, 'dilate': dilate},
+            'perimeter': {'circle': False, 'dilate': dilate},
+            'railway': {'width': {'rail': 4}, 'custom_filter': '["railway"~"subway|rail"]', 'circle': False, 'dilate': dilate},
             'streets': {
                 'width': {
                     'motorway': 5,
@@ -61,22 +62,24 @@ def main(options):
             'railway': {'fc': '#2F3737', 'ec': '#475657', 'alpha': 1, 'lw': 0, 'zorder': 5},
             'building': {'palette': ['#FFC857', '#E9724C', '#C5283D'], 'ec': '#2F3737', 'lw': .5, 'zorder': 3},
             'public_transport': {'fc': '#2B90E6', 'ec': '#2b90e6', 'lw': .5, 'zorder': 5},
-            'argiculture' : {'palette': ['#15B01A', '#BBF90F', '#FAC205'], 'ec': '#2F3737', 'lw': .5,  'zorder': 3}
+            'argiculture' : {'palette': ['#89d689', '#D0F1BF'], 'ec': '#2F3737', 'lw': .5,  'zorder': 3} #'#F7EAB5'
         },
-        osm_credit = {'x': .405, 'y': .68, 'color': '#2F3737'}
+        osm_credit = {'text': 'data © OpenStreetMap contributors', 'x': .1, 'y': .86, 'color': '#2F3737'}
     )
 
     xmin, ymin, xmax, ymax = layers['perimeter'].bounds
     dx, dy = xmax-xmin, ymax-ymin
-    a = .2
+    bdX = .08
+    bdY = .095
+    a = 0.2
     ax.set_xlim(xmin+a*dx, xmax-a*dx)
     ax.set_ylim(ymin+a*dy, ymax-a*dy)
 
     ax.text(
-        0.03, 0.9,
-        'Regensburg',
+        0.1, 0.87,
+        'Le Leman',
         color='#2F3737',
-        fontproperties=fm.FontProperties(fname='/home/thomas/Documents/Privat/prettymaps/prettymaps/assets/Permanent_Marker/PermanentMarker-Regular.ttf', size=35),
+        fontproperties=fm.FontProperties(fname='/home/thomas/Documents/Privat/prettymaps/prettymaps/assets/Permanent_Marker/PermanentMarker-Regular.ttf', size=60),
         transform=ax.transAxes
     )
 
@@ -91,6 +94,8 @@ def main(options):
 
     print(out, exts)
     for i, ext in enumerate(exts):
+        fwidth, fheight = fig.get_size_inches()
+        fig.savefig(out[i]+'_padded.'+ext, bbox_inches='tight', pad_inches=59.4*cm-fheight)
         fig.savefig(out[i]+'.'+ext)
 
 
